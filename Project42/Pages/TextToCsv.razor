@@ -1,0 +1,35 @@
+﻿@using Project42.Models
+@using Project42.Extension
+@page "/texttocsv"
+
+<PageTitle>Text to CSV</PageTitle>
+
+<h1>Text to CSV</h1>
+
+<EditForm Model=@Td OnSubmit=@FormSubmitted>
+    <div class="form-group">
+        <label for="InputText">Input Text</label>
+        <InputText @bind-Value=Td.InputText class="form-control" id="InputText" />
+    </div>
+    <br />
+    <div class="form-group">
+        <label for="OutputText">Output Text</label>
+        <InputText @bind-Value=Td.OutputText class="form-control" id="OutputText" />
+    </div>
+    <br />
+    <input type="submit" class="btn btn-primary" value="Convert"/>
+</EditForm>
+
+@code {
+    TextData Td = new TextData();
+
+    void FormSubmitted(EditContext editContext)
+    {
+        bool formIsValid = editContext.Validate();
+        if (formIsValid)
+        {
+            var td = (TextData)editContext.Model;
+            Td.OutputText = td.InputText.ToCSV();
+        }
+    }
+}
