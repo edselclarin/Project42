@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<ClipboardService>();
+builder.Services.AddScoped<PasswordGeneratorService>();
 
 var app = builder.Build();
 
