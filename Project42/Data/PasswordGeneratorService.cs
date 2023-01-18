@@ -9,7 +9,7 @@ namespace Project42.Data
         {
             int numWords = 3;
             int wordLength = 5;
-            string uri = $"https://random-word-api.herokuapp.com/word?number={numWords}&length={wordLength}";
+            string uri = $"https://random-word-api.vercel.app/api?words={numWords}&length={wordLength}&type=capitalized";
 
             var req = WebRequest.Create(uri);
             req.ContentType = "application/json";
