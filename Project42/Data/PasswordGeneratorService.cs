@@ -1,33 +1,30 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
 using System.Net;
 
 namespace Project42.Data
 {
     public class PasswordGeneratorService
     {
-        public static string Generate()
+        public static async Task<string> Generate()
         {
             int numWords = 3;
             int wordLength = 5;
             string uri = $"https://random-word-api.vercel.app/api?words={numWords}&length={wordLength}&type=capitalized";
 
-            var req = WebRequest.Create(uri);
-            req.ContentType = "application/json";
-            req.Method = "GET";
+			using (HttpClient client = new HttpClient())
+			using (HttpResponseMessage response = await client.GetAsync(uri))
+			using (HttpContent content = response.Content)
+			{
+				string jsonPayload = await content.ReadAsStringAsync();
 
-            var rsp = req.GetResponse();
-
-            using (var sr = new StreamReader(rsp.GetResponseStream()))
-            {
-                string jsonPayload = sr.ReadToEnd();
-
-                string[] words = JsonConvert.DeserializeObject<string[]>(jsonPayload);
+                string[]? words = JsonConvert.DeserializeObject<string[]>(jsonPayload);
 
                 return BuildPassword(words);
             }
-        }
+		}
 
-        private static string BuildPassword(string[] words)
+        private static string BuildPassword(string[]? words)
         {
             string pwd = String.Empty;
 
