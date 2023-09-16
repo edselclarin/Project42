@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
-using Newtonsoft.Json;
-using System.Net;
+﻿using Newtonsoft.Json;
 
 namespace Project42.Data
 {
@@ -22,7 +20,7 @@ namespace Project42.Data
 
                 return BuildPassword(words);
             }
-		}
+        }
 
         private static string BuildPassword(string[]? words)
         {
@@ -41,8 +39,8 @@ namespace Project42.Data
             return String.Join("", new string[]
             {
                 pwd,
-                "#",
-                DateTime.Now.ToString("HHmm")
+                "-",
+                (new Random()).Next(10000).ToString("D4")
             });
         }
     }
