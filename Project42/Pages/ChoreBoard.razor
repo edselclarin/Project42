@@ -1,0 +1,99 @@
+﻿@page "/choreboard"
+
+@using Project42.Data
+@using Project42.Models
+
+@inject NavigationManager NavigationManager
+@inject ChoreBoardService ChoreBoardService
+
+<PageTitle>Chore Board</PageTitle>
+
+<h1>Chore Board</h1>
+<br />
+
+@if (assignments_ != null && assignments_.Any())
+{
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+            th[colspan="4"] {
+                background-color: #e0e0e0;
+            }
+    </style>
+
+    <table>
+@* 
+        <thead>
+            <tr>
+                <!-- Add more columns as needed -->
+            </tr>
+        </thead>
+ *@
+        <tbody>
+            @{
+                var assignmentsByUser = assignments_.GroupBy(a => a.FirstName);
+                int numberOfEmptyColumns = 0;
+
+                foreach (var userGroup in assignmentsByUser)
+                {
+                    <tr>
+                        <th colspan="4">@userGroup.Key</th>
+                        <!-- Add more columns as needed -->
+                        <!-- Empty cells for columns that are not grouped -->
+                        @for (int i = 0; i < numberOfEmptyColumns; i++)
+                        {
+                            <td></td>
+                        }
+                    </tr>
+
+                    foreach (var assignment in userGroup)
+                    {
+                        <tr>
+                            <td>@assignment.GetDateRange()</td>
+                            <td>@assignment.ChoreName</td>
+                            <td>@assignment.ChoreDescription</td>
+                            <!-- Add more columns as needed -->
+                        </tr>
+                    }
+
+                    <br />
+                }
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Loading...</p>
+}
+
+@code {
+    private IEnumerable<ChoreAssignment> assignments_;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            assignments_ = await ChoreBoardService.GetAsync();
+        }
+        catch (Exception ex)
+        {
+            // TODO: send to logger
+
+            NavigationManager.NavigateTo("/error");
+        }
+    }
+}
