@@ -23,14 +23,21 @@ namespace Project42.Models
 
     public static class ChoreAssignmentExtension
     {
-        public static string GetDateRange(this ChoreAssignment choreAssignment)
+        public static string GetDays(this ChoreAssignment choreAssignment)
         {
-            return choreAssignment.DurationDays == 1 ?
-                $"{choreAssignment.StartDate:MM/dd/yyyy}" :
-                String.Join(
-                    " - ",
-                    $"{choreAssignment.StartDate:MM/dd/yyyy}",
-                    $"{choreAssignment.EndDate:MM/dd/yyyy}");
+            string str = string.Empty;
+            if (choreAssignment.DurationDays == 7)
+            {
+                str = "All Week";
+            }
+            else
+            {
+                for (var date = choreAssignment.StartDate; date <= choreAssignment.EndDate; date = date.AddDays(1))
+                {
+                    str += date.DayOfWeek.ToString().Substring(0, 2) + " ";
+                }
+            }
+            return str;
         }
     }
 }
