@@ -10,6 +10,6 @@ namespace Project42.Data
         {
         }
 
-        public DbSet<ChoreAssignment> ChoreAssignmentsForWeek { get; set; }
+        public DbSet<ChoreAssignment> ChoreAssignmentsForTheWeek { get; set; }
     }
 }

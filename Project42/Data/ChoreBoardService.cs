@@ -14,7 +14,7 @@ namespace Project42.Data
 
         public Task<List<ChoreAssignment>> GetAsync()
         {
-            return dbContext_.ChoreAssignmentsForWeek.ToListAsync();
+            return dbContext_.ChoreAssignmentsForTheWeek.ToListAsync();
         }
     }
 }
