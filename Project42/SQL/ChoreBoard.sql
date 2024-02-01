@@ -29,7 +29,7 @@ VALUES
 	('Wash Dishes', 'Collect and wash all dishes, glasses, silverware, etc.'),
 	('Vaccum', 'Vaccum the loft, stairs and downstairs.'),
 	('Clean Bedroom', 'Clear everything from the floor and vaccum.'),
-	('Pee Pad', 'Change Milo''s pee pad')
+	('Pee Pad', 'Change Milo''s pee pad.')
 
 -- Create ChoreAssignments table
 CREATE TABLE ChoreAssignments (
@@ -52,7 +52,8 @@ VALUES
 	(2,	3, 1, 7, -1),
 	(1,	4, 1, 3, -1),
 	(2,	4, 5, 3, -1),
-	(3, 4, 4, 1, -1)
+	(3, 4, 4, 1, -1),
+	(3, 5, 5, 1, -1)
 
 -- Example of adding a constraint for unique assignments per user and chore
 ALTER TABLE ChoreAssignments
